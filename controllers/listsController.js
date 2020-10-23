@@ -51,3 +51,15 @@ exports.createCardOnList = async (req, res, next) => {
     return next(new AppError(err.message, 400));
   }
 };
+
+exports.deleteCardsOnList = async (req, res, next) => {
+  try {
+    await List.updateMany(
+      { cards: req.params.id },
+      { $pull: { cards: req.params.id } }
+    );
+    next();
+  } catch (error) {
+    return next(new AppError(error.message), 400);
+  }
+};

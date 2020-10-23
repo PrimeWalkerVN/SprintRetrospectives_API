@@ -7,14 +7,14 @@ module.exports = mongoose.model(
       username: {
         type: String,
         required: [true, 'Please provide your name'],
-        unique: [true, 'Username is exists, try another!'],
+        unique: [true, 'Username already exists, try another!'],
         trim: true,
         minlength: [3, 'At least 3 character'],
       },
       email: {
         type: String,
         required: [true, 'Please provide your email'],
-        unique: [true, 'Email is exists, try another'],
+        unique: [true, 'Email already exists, try another'],
       },
       password: {
         type: String,

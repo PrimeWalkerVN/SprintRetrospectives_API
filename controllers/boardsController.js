@@ -2,6 +2,7 @@ const Board = require('../models/Board');
 const List = require('../models/List');
 const AppError = require('../utils/appError');
 const Factory = require('../controllers/factoryController');
+const { Mongoose } = require('mongoose');
 
 exports.getAllsBoards = Factory.getAll(Board);
 exports.createBoard = Factory.createOne(Board);
@@ -12,7 +13,7 @@ exports.deleteBoard = Factory.deleteOne(Board);
 // custom
 exports.createListsOnBoard = async (req, res, next) => {
   try {
-    let board = await Board.findById(req.params.id);
+    const board = await Board.findById(req.params.id);
     if (!board) {
       return next(new AppError('No document found with that ID', 404));
     }
@@ -32,5 +33,17 @@ exports.createListsOnBoard = async (req, res, next) => {
     });
   } catch (err) {
     return next(new AppError(err.message, 400));
+  }
+};
+
+exports.deleteListsOnBoard = async (req, res, next) => {
+  try {
+    await Board.updateMany(
+      { lists: req.params.id },
+      { $pull: { lists: req.params.id } }
+    );
+    next();
+  } catch (error) {
+    return next(new AppError(error.message), 400);
   }
 };
