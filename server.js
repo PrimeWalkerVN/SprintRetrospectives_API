@@ -16,6 +16,7 @@ const cardsRouter = require('./routes/cards');
 //Connect database
 mongoose.connect(process.env.DB_URI_LOCAL, {
   useNewUrlParser: true,
+  useCreateIndex: true,
   useUnifiedTopology: true,
 });
 const db = mongoose.connection;

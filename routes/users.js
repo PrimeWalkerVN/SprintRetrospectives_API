@@ -1,29 +1,14 @@
 const express = require('express');
 const router = express.Router();
+const userController = require('../controllers/usersController');
 
-// login
-router.get('/login', (req, res) => {
-  return res.status(200).json('Login success');
-});
+// get all users
+router.get('/', userController.getAll);
 
-// register
-router.get('/register', (req, res) => {
-  return res.status(200).json('register success');
-});
+// Login
+router.get('/login', userController.login);
 
-// update password
-router.put('/changePassword', (req, res) => {
-  return res.status(201).json('update success');
-});
-
-// Create user
-router.post('/create', (req, res) => {
-  return res.status(203).json('create success');
-});
-
-// delete user
-router.delete('/delete/:id', (req, res) => {
-  return res.status(202).json('delete success');
-});
+// sign up
+router.post('/signUp', userController.signUp);
 
 module.exports = router;

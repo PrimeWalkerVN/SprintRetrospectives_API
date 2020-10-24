@@ -4,6 +4,7 @@ const CardSchema = new mongoose.Schema({
   content: { type: String, required: true },
   date: Date,
   listId: { type: mongoose.Types.ObjectId, ref: 'List' },
+  createdAt: { type: Date, default: Date.now },
 });
 
 const Card = new mongoose.model('Card', CardSchema, 'cards');

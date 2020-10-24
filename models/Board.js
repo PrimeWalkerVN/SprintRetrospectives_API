@@ -8,6 +8,7 @@ module.exports = mongoose.model(
       ref: 'User',
     },
     lists: [{ type: mongoose.Types.ObjectId, ref: 'List' }],
+    createdAt: { type: Date, default: Date.now },
   }),
   'boards'
 );
