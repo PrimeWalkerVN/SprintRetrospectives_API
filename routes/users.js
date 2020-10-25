@@ -1,14 +1,54 @@
 const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/usersController');
+const passport = require('passport');
 
 // get all users
 router.get('/', userController.getAll);
 
 // Login
-router.get('/login', userController.login);
+router.post('/login', userController.login);
 
 // sign up
 router.post('/signUp', userController.signUp);
 
+// facebook
+router.get(
+  '/auth/facebook',
+  passport.authenticate('facebook', {
+    scope: ['email'],
+  })
+);
+router.get(
+  '/auth/facebook/callback',
+  passport.authenticate('facebook', {
+    scope: ['email'],
+  }),
+  userController.SignWithFacebook
+);
+
+// google
+router.get(
+  '/auth/google',
+  passport.authenticate('google', {
+    scope: ['profile', 'email'],
+  })
+);
+router.get(
+  '/auth/google/callback',
+  passport.authenticate('google'),
+  userController.SignWithGoogle
+);
+
+// get me
+router.get(
+  '/me',
+  passport.authenticate('jwt-auth', { session: false }),
+  (req, res) => {
+    res.json({ user: req.user });
+  }
+);
+
+// get user from token header
+router.get('/token', userController.getUserFromToken);
 module.exports = router;

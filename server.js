@@ -3,6 +3,11 @@ const app = express();
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const cors = require('cors');
+const helmet = require('helmet');
+const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
+const session = require('express-session');
+const passport = require('passport');
 
 const AppError = require('./utils/appError');
 const globalHandler = require('./controllers/errorsController');
@@ -23,13 +28,28 @@ const db = mongoose.connection;
 db.on('error', (error) => console.error(error));
 db.once('open', () => console.log('connected to database'));
 
-// config
+// config middleware
+require('./config/passport')(passport);
 app.enable('trust proxy');
 app.use(cors());
-
-// middleware
+app.use(helmet());
+app.use(cookieParser());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 app.use(express.json());
 app.use(morgan('dev'));
+
+// Passport init
+app.use(
+  session({
+    secret: 'passport-js',
+    cookie: { maxAge: 60000 },
+    resave: false,
+    saveUninitialized: false,
+  })
+);
+app.use(passport.initialize());
+app.use(passport.session());
 
 // route
 app.use('/api/v1/users', usersRouter);
