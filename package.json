@@ -32,5 +32,10 @@
   "scripts": {
     "start": "node server.js",
     "devStart": "nodemon server.js"
-  }
+  },
+  "engines": {
+  "node": "12.18.3",
+  "npm": "6.14.6"
+}
+
 }
