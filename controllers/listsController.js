@@ -31,8 +31,6 @@ exports.createCardOnList = catchAsync(async (req, res, next) => {
     listId: list._id,
     content: req.body.content,
   });
-
-  await List.updateOne({ _id: req.params.id }, { $push: { cards: card._id } });
   res.status(201).json({
     status: 'success',
     message: 'create card on list success',

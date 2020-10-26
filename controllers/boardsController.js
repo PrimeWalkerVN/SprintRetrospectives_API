@@ -11,6 +11,7 @@ exports.updateBoard = Factory.updateOne(Board);
 exports.deleteBoard = Factory.deleteOne(Board);
 
 // custom
+
 exports.createListsOnBoard = catchAsync(async (req, res, next) => {
   const board = await Board.findById(req.params.id);
   if (!board) {
@@ -21,7 +22,6 @@ exports.createListsOnBoard = catchAsync(async (req, res, next) => {
     boardId: board._id,
   });
 
-  await Board.updateOne({ _id: req.params.id }, { $push: { lists: list._id } });
   res.status(201).json({
     status: 'success',
     message: 'create a list on board success',
