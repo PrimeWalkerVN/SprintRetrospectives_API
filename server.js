@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const passport = require('passport');
+const auth = require('./middlewares/auth');
 
 const AppError = require('./utils/appError');
 const globalHandler = require('./controllers/errorsController');
@@ -19,7 +20,7 @@ const listsRouter = require('./routes/lists');
 const cardsRouter = require('./routes/cards');
 
 //Connect database
-mongoose.connect(process.env.DB_URI, {
+mongoose.connect(process.env.DB_URI_LOCAL, {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
@@ -52,10 +53,12 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 // route
-app.use('/api/v1/users', usersRouter);
-app.use('/api/v1/boards', boardsRouter);
-app.use('/api/v1/lists', listsRouter);
-app.use('/api/v1/cards', cardsRouter);
+const api = express.Router();
+api.use('/users', usersRouter);
+api.use('/boards', auth, boardsRouter);
+api.use('/lists', auth, listsRouter);
+api.use('/cards', auth, cardsRouter);
+app.use('/api/v1', api);
 
 app.all('*', (req, res, next) => {
   next(

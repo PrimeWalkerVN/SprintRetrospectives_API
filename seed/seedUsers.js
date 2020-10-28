@@ -35,13 +35,16 @@ let data = [
 ];
 
 // connect mongodb
-seeder.connect('mongodb://localhost:27017/SprintRetrospective', function () {
-  seeder.loadModels([
-    '../models/User.js', // load mongoose model
-  ]);
-  seeder.clearModels(['User'], function () {
-    seeder.populateModels(data, function () {
-      seeder.disconnect();
+seeder.connect(
+  'mongodb+srv://guest:guest123@cluster0.2c3f8.mongodb.net/SprintRetrospective?retryWrites=true&w=majority',
+  function () {
+    seeder.loadModels([
+      '../models/User.js', // load mongoose model
+    ]);
+    seeder.clearModels(['User'], function () {
+      seeder.populateModels(data, function () {
+        seeder.disconnect();
+      });
     });
-  });
-});
+  }
+);

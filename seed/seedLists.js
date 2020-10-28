@@ -7,11 +7,14 @@ const _ = require('lodash');
 const faker = require('faker');
 
 new Promise((resolve) => {
-  mongoose.connect('mongodb://localhost:27017/SprintRetrospective', {
-    promiseLibrary: require('bluebird'),
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
+  mongoose.connect(
+    'mongodb+srv://guest:guest123@cluster0.2c3f8.mongodb.net/SprintRetrospective?retryWrites=true&w=majority',
+    {
+      promiseLibrary: require('bluebird'),
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  );
   async.parallel(
     [
       (callback) => {
@@ -41,7 +44,7 @@ new Promise((resolve) => {
   })
   .then((items) => {
     seeder.connect(
-      'mongodb://localhost:27017/SprintRetrospective',
+      'mongodb+srv://guest:guest123@cluster0.2c3f8.mongodb.net/SprintRetrospective?retryWrites=true&w=majority',
       function () {
         let data = [
           {

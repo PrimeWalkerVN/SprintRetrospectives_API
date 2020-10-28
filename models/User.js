@@ -52,7 +52,7 @@ userSchema.methods.generateJWT = (username) => {
   const today = new Date();
   // JWT Token expires 15 minutes after the creation
   const expirationDate = new Date(today);
-  expirationDate.setMinutes(today.getMinutes() + 15);
+  expirationDate.setMinutes(today.getMinutes() + 60);
 
   return jwt.sign(
     {

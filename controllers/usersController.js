@@ -82,7 +82,7 @@ exports.SignWithFacebook = async (req, res, next) => {
 
 exports.getUserFromToken = async (req, res, next) => {
   return passport.authenticate(
-    'jwt-auth',
+    'jwt',
     { session: false },
     (err, passportUser, info) => {
       if (err) {

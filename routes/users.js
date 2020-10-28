@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const userController = require('../controllers/usersController');
 const passport = require('passport');
+const auth = require('../middlewares/auth');
 
 // get all users
 router.get('/', userController.getAll);
@@ -41,13 +42,9 @@ router.get(
 );
 
 // get me
-router.get(
-  '/me',
-  passport.authenticate('jwt-auth', { session: false }),
-  (req, res) => {
-    res.json({ user: req.user });
-  }
-);
+router.get('/me', auth, (req, res) => {
+  res.json({ user: req.user });
+});
 
 // get user from token header
 router.get('/token', userController.getUserFromToken);
