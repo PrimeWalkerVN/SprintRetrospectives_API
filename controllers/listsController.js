@@ -3,6 +3,7 @@ const AppError = require('../utils/appError');
 const Card = require('../models/Card');
 const Factory = require('./factoryController');
 const catchAsync = require('../utils/catchAsync');
+const { appSuccess } = require('../utils/appSuccess');
 
 exports.getAllsLists = Factory.getAll(List);
 exports.getListById = Factory.getOne(List);
@@ -15,10 +16,7 @@ exports.getListsByBoardId = catchAsync(async (req, res, next) => {
   if (!doc) {
     return next(new AppError('No document found with that ID', 404));
   }
-  res.status(200).json({
-    status: 'success',
-    data: doc,
-  });
+  res.status(200).json(appSuccess(doc));
 });
 
 exports.createCardOnList = catchAsync(async (req, res, next) => {
@@ -31,21 +29,5 @@ exports.createCardOnList = catchAsync(async (req, res, next) => {
     listId: list._id,
     content: req.body.content,
   });
-  res.status(201).json({
-    status: 'success',
-    message: 'create card on list success',
-    data: card,
-  });
-});
-
-exports.deleteCardsOnList = catchAsync(async (req, res, next) => {
-  try {
-    await List.updateMany(
-      { cards: req.params.id },
-      { $pull: { cards: req.params.id } }
-    );
-    next();
-  } catch (error) {
-    return next(new AppError(error.message), 400);
-  }
+  res.status(201).json(appSuccess(card, 'create card on list success'));
 });

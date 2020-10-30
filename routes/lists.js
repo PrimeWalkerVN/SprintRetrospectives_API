@@ -2,7 +2,6 @@ const express = require('express');
 const router = express.Router();
 const listsController = require('../controllers/listsController');
 const cardsController = require('../controllers/cardsController');
-const boardsController = require('../controllers/boardsController');
 
 // Get all list
 router.get('/', listsController.getAllsLists);
@@ -20,10 +19,6 @@ router.post('/:id/cards', listsController.createCardOnList);
 router.put('/:id', listsController.updateList);
 
 // Delete one list
-router.delete(
-  '/:id',
-  boardsController.deleteListsOnBoard,
-  listsController.deleteList
-);
+router.delete('/:id', listsController.deleteList);
 
 module.exports = router;

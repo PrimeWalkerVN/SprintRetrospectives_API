@@ -13,6 +13,10 @@ ListSchema.pre('save', async function (next) {
   await Board.updateOne({ _id: this.boardId }, { $push: { lists: this._id } });
   next();
 });
+ListSchema.pre('findByIdAndDelete', async function (next) {
+  await Board.updateMany({ lists: this._id }, { $pull: { lists: this._id } });
+  next();
+});
 
 const List = new mongoose.model('List', ListSchema, 'lists');
 module.exports = List;

@@ -22,17 +22,5 @@ exports.createListsOnBoard = catchAsync(async (req, res, next) => {
     boardId: board._id,
   });
 
-  res.status(201).json({
-    status: 'success',
-    message: 'create a list on board success',
-    data: list,
-  });
-});
-
-exports.deleteListsOnBoard = catchAsync(async (req, res, next) => {
-  await Board.updateMany(
-    { lists: req.params.id },
-    { $pull: { lists: req.params.id } }
-  );
-  next();
+  res.status(201).json(appSuccess(list, 'Create list on board success'));
 });

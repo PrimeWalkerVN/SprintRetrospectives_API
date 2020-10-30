@@ -11,6 +11,13 @@ CardSchema.pre('save', async function (next) {
   await List.updateOne({ _id: this.listId }, { $push: { cards: this._id } });
   next();
 });
+CardSchema.pre('findByIdAndDelete', async function (next) {
+  await List.updateMany(
+    { cards: req.params.id },
+    { $pull: { cards: req.params.id } }
+  );
+  next();
+});
 
 const Card = new mongoose.model('Card', CardSchema, 'cards');
 module.exports = Card;

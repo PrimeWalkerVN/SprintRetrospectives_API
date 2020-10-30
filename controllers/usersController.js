@@ -4,6 +4,7 @@ const AppError = require('../utils/appError');
 const catchAsync = require('../utils/catchAsync');
 const Factory = require('./factoryController');
 const passport = require('passport');
+const { appSuccess } = require('../utils/appSuccess');
 exports.getAll = Factory.getAll(User);
 
 exports.login = catchAsync(async (req, res, next) => {
@@ -21,13 +22,12 @@ exports.login = catchAsync(async (req, res, next) => {
         return next(new AppError(error, 400));
       }
       if (passportUser) {
-        return res.status(201).json({
-          status: 'success',
-          data: {
+        return res.status(200).json(
+          appSuccess({
             user: passportUser,
             token: passportUser.generateJWT(passportUser.username),
-          },
-        });
+          })
+        );
       }
       return next(new AppError(info, 400));
     }
@@ -47,13 +47,11 @@ exports.signUp = catchAsync(async (req, res, next) => {
         return next(new AppError(err, 400));
       }
       if (passportUser) {
-        res.status(201).json({
-          status: 'success',
-          data: {
-            user: passportUser,
+        res.status(201).json(
+          appSuccess({
             token: passportUser.generateJWT(passportUser.username),
-          },
-        });
+          })
+        );
       }
       return next(new AppError(info, 400));
     }
@@ -62,22 +60,22 @@ exports.signUp = catchAsync(async (req, res, next) => {
 
 exports.SignWithGoogle = async (req, res, next) => {
   let token = req.user.token;
-  res.status(200).json({
-    status: 'success',
-    data: {
-      token: token,
-    },
-  });
+  res.status(200).json(
+    appSuccess({
+      user: req.user,
+      token: passportUser.generateJWT(token),
+    })
+  );
 };
 
 exports.SignWithFacebook = async (req, res, next) => {
-  const token = req.user.token;
-  res.status(200).json({
-    status: 'success',
-    data: {
-      token: token,
-    },
-  });
+  let token = req.user.token;
+  res.status(200).json(
+    appSuccess({
+      user: req.user,
+      token: passportUser.generateJWT(token),
+    })
+  );
 };
 
 exports.getUserFromToken = async (req, res, next) => {
@@ -89,7 +87,11 @@ exports.getUserFromToken = async (req, res, next) => {
         return res.status(401).json({ errors: err });
       }
       if (passportUser) {
-        return res.status(200).json({ user: passportUser });
+        return res.status(200).json(
+          appSuccess({
+            user: passportUser,
+          })
+        );
       }
       return res.status(400).json({
         info: 'Please check if your token is valid and provide a good one',

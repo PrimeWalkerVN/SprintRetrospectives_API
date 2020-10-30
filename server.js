@@ -11,7 +11,7 @@ const passport = require('passport');
 const auth = require('./middlewares/auth');
 
 const AppError = require('./utils/appError');
-const globalHandler = require('./controllers/errorsController');
+const globalErrorHandler = require('./controllers/errorsController');
 require('dotenv').config();
 
 const usersRouter = require('./routes/users');
@@ -68,7 +68,7 @@ app.all('*', (req, res, next) => {
     )
   );
 });
-app.use(globalHandler);
+app.use(globalErrorHandler);
 //Setup
 const port = process.env.PORT || '3000';
 app.listen(port, () => console.log(`server started in port ${port}`));
