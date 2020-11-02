@@ -122,16 +122,11 @@ module.exports = (passport) => {
               return done(null, user);
             } else {
               let newUser = new User();
-
               newUser.facebookId = profile.id;
               newUser.username = profile.id;
               newUser.token = token;
               newUser.fullName =
-                profile.name.givenName +
-                ' ' +
-                profile.name.middleName +
-                ' ' +
-                profile.name.familyName;
+                profile.name.givenName + ' ' + profile.name.familyName;
               newUser.email = profile.emails[0].value;
 
               newUser.save((err) => {
