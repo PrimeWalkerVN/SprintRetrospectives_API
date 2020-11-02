@@ -42,6 +42,7 @@ module.exports = (passport) => {
               newUser.username = username;
               newUser.email = req.body.email;
               newUser.password = password;
+              newUser.fullName = req.body.fullName;
               newUser.save((err) => {
                 if (err) return done(null, false, err);
                 return done(null, newUser);
@@ -125,8 +126,12 @@ module.exports = (passport) => {
               newUser.facebookId = profile.id;
               newUser.username = profile.id;
               newUser.token = token;
-              newUser.name =
-                profile.name.givenName + ' ' + profile.name.familyName;
+              newUser.fullName =
+                profile.name.givenName +
+                ' ' +
+                profile.name.middleName +
+                ' ' +
+                profile.name.familyName;
               newUser.email = profile.emails[0].value;
 
               newUser.save((err) => {
@@ -161,7 +166,7 @@ module.exports = (passport) => {
               newUser.googleId = profile.id;
               newUser.username = profile.id;
               newUser.token = token;
-              newUser.name = profile.displayName;
+              newUser.fullName = profile.displayName;
               newUser.email = profile.emails[0].value;
 
               newUser.save((err) => {

@@ -59,23 +59,13 @@ exports.signUp = catchAsync(async (req, res, next) => {
 });
 
 exports.SignWithGoogle = async (req, res, next) => {
-  let token = req.user.token;
-  res.status(200).json(
-    appSuccess({
-      user: req.user,
-      token: passportUser.generateJWT(token),
-    })
-  );
+  const token = await req.user.generateJWT(req.user.username);
+  await res.redirect(`${process.env.CLIENT_URI_LOCAL}/?token=` + token);
 };
 
 exports.SignWithFacebook = async (req, res, next) => {
-  let token = req.user.token;
-  res.status(200).json(
-    appSuccess({
-      user: req.user,
-      token: passportUser.generateJWT(token),
-    })
-  );
+  const token = await req.user.generateJWT(req.user.username);
+  await res.redirect(`${process.env.CLIENT_URI_LOCAL}/?token=` + token);
 };
 
 exports.getUserFromToken = async (req, res, next) => {

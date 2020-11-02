@@ -5,6 +5,7 @@ const signUpValidation = (data) => {
     username: Joi.string().min(6).required(),
     email: Joi.string().min(6).required().email(),
     password: Joi.string().min(6).required(),
+    fullName: Joi.string(),
   });
   return signUpSchema.validate(data);
 };
