@@ -60,12 +60,12 @@ exports.signUp = catchAsync(async (req, res, next) => {
 
 exports.SignWithGoogle = async (req, res, next) => {
   const token = await req.user.generateJWT(req.user.username);
-  await res.redirect(`${process.env.CLIENT_URI_LOCAL}/?token=` + token);
+  await res.redirect(`${process.env.CLIENT_URI}/?token=` + token);
 };
 
 exports.SignWithFacebook = async (req, res, next) => {
   const token = await req.user.generateJWT(req.user.username);
-  await res.redirect(`${process.env.CLIENT_URI_LOCAL}/?token=` + token);
+  await res.redirect(`${process.env.CLIENT_URI}/?token=` + token);
 };
 
 exports.getUserFromToken = async (req, res, next) => {
