@@ -53,7 +53,7 @@ exports.getOne = (Model) =>
 // get all
 exports.getAll = (Model) =>
   catchAsync(async (req, res, next) => {
-    const doc = await Model.find({ userId: req.user._id });
+    const doc = await Model.find();
 
     res.status(200).json({
       status: 'success',

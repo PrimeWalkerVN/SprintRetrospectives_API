@@ -4,7 +4,10 @@ const boardsController = require('../controllers/boardsController');
 const listsController = require('../controllers/listsController');
 
 // Get all boards
-router.get('/', boardsController.getAllsBoards);
+router.get('/all', boardsController.getAllsBoards);
+
+// Get boards by userId
+router.get('/', boardsController.getBoardsByUserId);
 
 // Get one board
 router.get('/:id', boardsController.getBoardById);

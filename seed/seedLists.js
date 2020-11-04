@@ -32,7 +32,7 @@ new Promise((resolve) => {
   .then((results) => {
     return new Promise((resolve) => {
       let items = [];
-      for (i = 0; i < 20; i++) {
+      for (i = 0; i < 3; i++) {
         items.push({
           name: faker.name.jobTitle(),
           boardId: _.sample(results[0])._id,
