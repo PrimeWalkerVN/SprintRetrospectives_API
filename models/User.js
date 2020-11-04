@@ -51,7 +51,7 @@ userSchema.methods.generateJWT = (username) => {
   const today = new Date();
   // JWT Token expires 15 minutes after the creation
   const expirationDate = new Date(today);
-  expirationDate.setMinutes(today.getMinutes() + 60);
+  expirationDate.setMinutes(today.getMinutes() + 1440);
 
   return jwt.sign(
     {
@@ -63,5 +63,5 @@ userSchema.methods.generateJWT = (username) => {
   );
 };
 
-const User = new mongoose.model('User', userSchema, 'users');
+const User = mongoose.model('User', userSchema, 'users');
 module.exports = User;

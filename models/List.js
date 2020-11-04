@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const Board = require('./Board');
-
 const ListSchema = new mongoose.Schema({
   boardId: { type: mongoose.Types.ObjectId, ref: 'Board', required: true },
   name: { type: String, required: true },
