@@ -46,6 +46,9 @@ router.get('/me', auth, (req, res) => {
   res.json({ user: req.user });
 });
 
+// update profile
+router.put('/update-profile', auth, userController.updateProfile);
+
 // get user from token header
 router.get('/token', userController.getUserFromToken);
 module.exports = router;

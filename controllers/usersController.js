@@ -89,3 +89,17 @@ exports.getUserFromToken = async (req, res, next) => {
     }
   )(req, res, next);
 };
+
+exports.updateProfile = catchAsync(async (req, res, next) => {
+  const params = {};
+  if (req.body.fullName) params.fullName = req.body.fullName;
+  if (req.body.email) params.email = req.body.email;
+  const doc = await User.findByIdAndUpdate(req.user._id, params, {
+    runValidators: true,
+  });
+  if (!doc) return next(new AppError('No document found with that ID', 404));
+  res.status(200).json({
+    status: 'success',
+    user: doc,
+  });
+});
