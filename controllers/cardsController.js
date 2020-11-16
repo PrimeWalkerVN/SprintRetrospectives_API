@@ -12,7 +12,9 @@ exports.deleteCard = Factory.deleteOne(Card);
 
 // custom
 exports.getCardsByListId = catchAsync(async (req, res, next) => {
-  const doc = await Card.find({ listId: req.params.id });
+  const doc = await Card.find({ listId: req.params.id }, null, {
+    sort: { order: 'asc' },
+  });
   if (!doc) return next(new AppError('No document found with that ID ', 404));
   res.status(200).json(appSuccess(doc));
 });
