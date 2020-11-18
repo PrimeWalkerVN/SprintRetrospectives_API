@@ -1,5 +1,5 @@
 # API for Sprint Retrospectives app
-
+# Host: https://sprintrestrospectiveapi.herokuapp.com/api/v1
 
 ## Available Scripts
 
